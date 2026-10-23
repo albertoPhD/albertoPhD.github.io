@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 160">
+  <defs>
+    <linearGradient id="vortex-mark-fade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F6F7F9" stop-opacity="1"/>
+      <stop offset="63%" stop-color="#F6F7F9" stop-opacity="1"/>
+      <stop offset="75%" stop-color="#F6F7F9" stop-opacity=".94"/>
+      <stop offset="85%" stop-color="#F6F7F9" stop-opacity=".67"/>
+      <stop offset="94%" stop-color="#F6F7F9" stop-opacity=".28"/>
+      <stop offset="100%" stop-color="#F6F7F9" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <path d="M16 139 91 16 112 16 47 139Z" fill="url(#vortex-mark-fade)"/>
+  <path d="M112 16 170 139h-24L101 39Z" fill="url(#vortex-mark-fade)"/>
+</svg>

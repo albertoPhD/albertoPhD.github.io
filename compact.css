@@ -123,8 +123,89 @@ a.result-row:hover{padding-left:8px;background:rgba(255,255,255,.025)}
 .compact-contact .contact-links a{padding:10px 13px}
 .footer-inner{min-height:72px}
 .footer-logo-img{width:25px;height:25px;object-fit:contain}
+
+/* Institutional experience — MIT first, UPCT active, Ulm research stay. */
+.experience-section{background:radial-gradient(ellipse 48% 46% at 80% 0%,rgba(50,83,127,.16),transparent),#080b10;padding:63px 0 68px}
+.experience-heading{display:grid;grid-template-columns:1fr minmax(240px,.54fr);gap:45px;align-items:end;margin-bottom:28px}
+.experience-heading h2{font-size:clamp(41px,4.9vw,66px);font-weight:620;line-height:1.07;letter-spacing:-.075em;margin:0}
+.experience-heading h2 span{color:#8b97a9}
+.experience-heading>p{font-size:13px;line-height:1.8;color:#9ca8b9;margin:0;max-width:350px}
+.experience-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.experience-feature{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1.16fr) minmax(300px,.84fr);border:1px solid rgba(172,204,250,.27);border-radius:10px;background:linear-gradient(115deg,#121e30 0%,#0d1521 53%,#0b1019 100%);overflow:hidden;position:relative}
+.experience-feature:after{content:"";position:absolute;top:0;left:0;width:220px;height:2px;background:linear-gradient(90deg,#d5e7ff,rgba(144,183,235,.18),transparent)}
+.experience-feature-main{padding:26px 31px 27px;display:flex;flex-direction:column}
+.experience-meta{display:flex;justify-content:space-between;gap:18px;align-items:center;font:500 10px/1.5 var(--mono);letter-spacing:.055em;color:#a9b4c6}
+.status-current{display:inline-flex;align-items:center;gap:9px;color:#e6f3ff}
+.status-current i,.institution-status i{display:inline-block;width:6px;height:6px;background:#9fe4d5;box-shadow:0 0 10px rgba(119,247,209,.55);border-radius:50%}
+.experience-feature-identity{display:flex;align-items:center;gap:26px;margin:30px 0 25px}
+.mit-identity{width:105px;flex:none;display:flex;align-items:center;justify-content:center}
+.mit-identity img{width:100%;height:auto;object-fit:contain}
+.experience-feature h3{font-size:clamp(23px,2.3vw,34px);line-height:1.17;letter-spacing:-.055em;font-weight:610;margin:0;color:#f6f8fd}
+.experience-feature-identity p{font-size:12px;color:#a3b0c3;line-height:1.6;margin:9px 0 0}
+.experience-type{font:500 9px/1.5 var(--mono);color:#7899c7;letter-spacing:.11em;margin-top:auto}
+.experience-feature-groups{border-left:1px solid rgba(205,224,251,.12);background:rgba(2,7,15,.23);padding:13px 27px}
+.research-group{padding:13px 0 15px}
+.research-group + .research-group{border-top:1px solid rgba(190,209,240,.12)}
+.research-group>span{display:block;font:500 9px/1.55 var(--mono);color:#87a6d1;letter-spacing:.06em}
+.research-group strong{display:block;font-size:17px;font-weight:580;letter-spacing:-.035em;margin-top:9px;color:#edf2fa}
+.research-group p{font-size:11px;color:#919db0;margin:6px 0 0;line-height:1.6}
+.experience-institution{min-width:0;display:flex;flex-direction:column;padding:23px 26px 0;border:1px solid var(--compact-stroke);border-radius:9px;background:linear-gradient(142deg,#10151d,#0b0e14 84%)}
+.institution-head{display:flex;justify-content:space-between;align-items:center;gap:15px;font:500 10px/1.5 var(--mono);color:#a0b0c8;letter-spacing:.04em}
+.institution-status{display:inline-flex;align-items:center;gap:8px;color:#c8dfd9}
+.institution-status.secondary{color:#91a4be}
+.institution-body{display:flex;gap:23px;align-items:center;min-height:164px;padding:20px 0}
+.institution-logo-plate{flex:0 0 176px;width:176px;min-height:82px;background:#fff;display:flex;align-items:center;justify-content:center;padding:17px 15px;border-radius:4px}
+.institution-logo-plate img{width:100%;height:auto;max-height:60px;object-fit:contain}
+.upct-plate img{filter:grayscale(1) brightness(0)}
+.ulm-plate img{max-height:48px}
+.institution-body h3{margin:0 0 8px;font-size:22px;line-height:1.18;font-weight:590;letter-spacing:-.045em;color:#e9edf5}
+.institution-body p{font-size:11px;color:#8d99aa;line-height:1.6;margin:4px 0}
+.institution-body .institution-name{font-size:12px;color:#d2dce9;font-weight:540}
+.institution-footer{font:500 9px/1.6 var(--mono);letter-spacing:.06em;color:#8196b5;padding:14px 0;border-top:1px solid rgba(255,255,255,.10);margin-top:auto}
+
+/* Degrees and professional credentials share one quiet, scannable grid. */
+.education-section{background:#080a0e}
+.education-grid{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(310px,.88fr);gap:34px}
+.degree-list{border-top:1px solid var(--compact-stroke)}
+.degree-item{display:grid;grid-template-columns:40px 1fr;gap:16px;padding:23px 4px 24px 0;border-bottom:1px solid var(--compact-stroke)}
+.degree-number{font:500 12px/1.5 var(--mono);color:#566b89;padding-top:1px}
+.degree-topline{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;font:500 10px/1.5 var(--mono);letter-spacing:.045em;color:#92a7c7;margin-bottom:10px}
+.degree-progress{color:#a5dacc;font-size:9px}
+.degree-item h3{font-size:20px;line-height:1.3;font-weight:580;letter-spacing:-.04em;color:#e9edf4;margin:0}
+.degree-item p{font-size:12px;line-height:1.6;color:#8996a8;margin:7px 0 0}
+.degree-item p i{display:inline-block;width:3px;height:3px;background:#7896bc;border-radius:50%;margin:0 7px 3px}
+.credential-column{display:flex;flex-direction:column;gap:10px}
+.credential-primary{position:relative;overflow:hidden;padding:25px 28px 24px;border:1px solid rgba(173,202,243,.3);border-radius:9px;background:radial-gradient(circle at 100% 0%,rgba(95,130,201,.20),transparent 50%),linear-gradient(135deg,#111b2a,#10151e)}
+.credential-topline{display:flex;justify-content:space-between;align-items:center;gap:15px;color:#d0e0f8;font:500 10px/1.5 var(--mono);letter-spacing:.08em}
+.credential-topline span:first-child{font-size:22px;line-height:1;font-weight:700;letter-spacing:.02em;color:#fff}
+.credential-topline span:last-child{color:#97b7e7}
+.credential-symbol{position:absolute;right:27px;top:81px;font-size:33px;font-weight:300;color:rgba(142,180,234,.48)}
+.credential-primary h3{font-size:29px;line-height:1.17;font-weight:590;letter-spacing:-.052em;color:#f0f4fa;margin:36px 40px 10px 0}
+.credential-primary>p{font-size:12px;line-height:1.75;color:#a0adbd;max-width:340px;margin:0 0 27px}
+.credential-bottom{display:flex;align-items:center;justify-content:space-between;gap:20px;padding-top:14px;border-top:1px solid rgba(255,255,255,.12);font:500 9px/1.5 var(--mono);letter-spacing:.035em;color:#829ab9}
+.credential-bottom span{font-size:15px}
+.credential-secondary{display:flex;flex-direction:column;gap:7px;padding:14px 19px;border:1px solid rgba(200,214,238,.13);border-radius:6px;background:rgba(255,255,255,.015)}
+.credential-secondary span{font:500 9px/1.5 var(--mono);letter-spacing:.06em;color:#809abf}
+.credential-secondary strong{font-size:12px;line-height:1.4;color:#d2dbe7;font-weight:550}
+.community-drawer{margin-top:27px;border-top:1px solid rgba(255,255,255,.16);border-bottom:1px solid rgba(255,255,255,.16)}
+.community-drawer summary{list-style:none;display:flex;justify-content:space-between;align-items:center;gap:20px;cursor:pointer;padding:20px 3px}
+.community-drawer summary::-webkit-details-marker{display:none}
+.community-drawer summary b{display:block;font-size:13px;font-weight:590;color:#d9e3ee}
+.community-drawer summary small{display:block;font-size:11px;color:#8494aa;margin-top:6px;line-height:1.5}
+.community-expand{font-size:23px;color:#b8cde9;font-weight:300;transition:transform .2s}
+.community-drawer[open] .community-expand{transform:rotate(45deg)}
+.community-content{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:35px;padding:5px 3px 24px;animation:detail-arrive .25s ease-out}
+.community-content>div{border-top:1px solid rgba(255,255,255,.1);padding-top:16px}
+.community-content span{font:500 9px/1.5 var(--mono);color:#849fc5;letter-spacing:.05em}
+.community-content h3{font-size:17px;font-weight:570;letter-spacing:-.03em;margin:12px 0 7px}
+.community-content p{font-size:11px;line-height:1.7;color:#8f9dad;margin:0}
 @media(max-width:1050px){
-  .nav{gap:18px}
+  .nav{gap:15px}
+  .nav>a{font-size:12px}
+  .experience-feature-identity{gap:15px}
+  .institution-body{gap:15px}
+  .institution-logo-plate{width:143px;flex-basis:143px;padding:14px}
+  .institution-body h3{font-size:20px}
   .affiliation-inner{grid-template-columns:1.1fr 1fr 1fr;gap:16px}
   .affiliation-main{gap:13px;padding-right:13px}
   .compact-section-head{gap:35px}
@@ -139,6 +220,18 @@ a.result-row:hover{padding-left:8px;background:rgba(255,255,255,.025)}
   .hero-inner{min-height:645px;padding-top:70px}
   .hero h1{font-size:clamp(56px,9vw,86px)}
   .hero-light-sculpture{width:520px;height:520px;right:-190px;opacity:.34}
+  .experience-heading{grid-template-columns:1fr;gap:12px}
+  .experience-heading h2{font-size:clamp(45px,7vw,65px)}
+  .experience-feature{grid-template-columns:1fr}
+  .experience-feature-groups{display:grid;grid-template-columns:1fr 1fr;gap:20px;border-left:0;border-top:1px solid rgba(205,224,251,.12);padding:5px 29px}
+  .research-group+.research-group{border:0}
+  .institution-body{flex-direction:column;align-items:start;gap:18px}
+  .institution-logo-plate{width:100%;flex:0 0 auto;max-width:218px}
+  .education-grid{grid-template-columns:1fr;gap:28px}
+  .credential-column{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+  .credential-primary{grid-row:span 2}
+  .credential-secondary{justify-content:center}
+  .community-content{gap:18px}
   .affiliation-inner{grid-template-columns:1fr 1fr;gap:23px}
   .affiliation-main{grid-column:1/-1;padding:0 0 19px;border-right:0;border-bottom:1px solid var(--compact-stroke)}
   .affiliation-group{padding:0}
@@ -166,6 +259,31 @@ a.result-row:hover{padding-left:8px;background:rgba(255,255,255,.025)}
   .hero-light-sculpture{right:-225px;top:36%;width:455px;height:455px;opacity:.26}
   .hero-buttons .button{height:46px}
   .hero-bottom{padding:15px 0 17px}
+  .experience-section{padding:45px 0 52px}
+  .experience-heading{margin-bottom:22px}
+  .experience-heading h2{font-size:clamp(41px,10vw,55px)}
+  .experience-grid{grid-template-columns:1fr;gap:11px}
+  .experience-feature{grid-column:auto}
+  .experience-feature-main{padding:23px 21px}
+  .experience-meta{font-size:9px}
+  .experience-feature-identity{gap:17px;margin:27px 0 22px}
+  .mit-identity{width:72px}
+  .experience-feature h3{font-size:24px}
+  .experience-feature-identity p{font-size:11px}
+  .experience-feature-groups{grid-template-columns:1fr;gap:0;padding:6px 22px}
+  .research-group{padding:12px 0}
+  .research-group+.research-group{border-top:1px solid rgba(190,209,240,.12)}
+  .experience-institution{padding:20px 21px 0}
+  .institution-body{min-height:0;gap:15px;padding:19px 0}
+  .institution-logo-plate{width:190px;min-height:77px}
+  .institution-body h3{font-size:21px}
+  .education-grid{gap:25px}
+  .degree-item{grid-template-columns:27px 1fr;gap:12px;padding:20px 0}
+  .degree-item h3{font-size:18px}
+  .credential-column{display:flex;gap:10px}
+  .credential-primary{padding:23px 21px}
+  .credential-primary h3{margin-top:28px;font-size:27px}
+  .community-content{grid-template-columns:1fr;gap:17px}
   .affiliation-inner{grid-template-columns:1fr;gap:16px;padding:24px 0}
   .affiliation-main{padding-bottom:16px}
   .affiliation-group{border-bottom:1px solid rgba(255,255,255,.07);padding-bottom:13px}

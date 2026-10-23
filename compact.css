@@ -124,7 +124,7 @@ a.result-row:hover{padding-left:8px;background:rgba(255,255,255,.025)}
 .footer-inner{min-height:72px}
 .footer-logo-img{width:25px;height:25px;object-fit:contain}
 
-/* Institutional experience — MIT first, UPCT active, Ulm research stay. */
+/* Institutional experience — MIT first, UPCT ongoing, Ulm research stay. */
 .experience-section{background:radial-gradient(ellipse 48% 46% at 80% 0%,rgba(50,83,127,.16),transparent),#080b10;padding:63px 0 68px}
 .experience-heading{display:grid;grid-template-columns:1fr minmax(240px,.54fr);gap:45px;align-items:end;margin-bottom:28px}
 .experience-heading h2{font-size:clamp(41px,4.9vw,66px);font-weight:620;line-height:1.07;letter-spacing:-.075em;margin:0}
@@ -150,6 +150,11 @@ a.result-row:hover{padding-left:8px;background:rgba(255,255,255,.025)}
 .research-group strong{display:block;font-size:17px;font-weight:580;letter-spacing:-.035em;margin-top:9px;color:#edf2fa}
 .research-group p{font-size:11px;color:#919db0;margin:6px 0 0;line-height:1.6}
 .experience-institution{min-width:0;display:flex;flex-direction:column;padding:23px 26px 0;border:1px solid var(--compact-stroke);border-radius:9px;background:linear-gradient(142deg,#10151d,#0b0e14 84%)}
+/* A narrow emerald highlight travels around the UPCT card; the card itself stays still. */
+@property --upct-border-angle{syntax:"<angle>";initial-value:0deg;inherits:false}
+.experience-upct{position:relative;isolation:isolate;border-color:rgba(114,214,155,.29)}
+.experience-upct::before{content:"";position:absolute;inset:-1px;border-radius:inherit;padding:2px;pointer-events:none;z-index:3;background:conic-gradient(from var(--upct-border-angle),transparent 0deg,transparent 253deg,rgba(72,213,135,.13) 276deg,rgba(112,247,169,.78) 297deg,#bdffd6 307deg,rgba(89,227,145,.3) 324deg,transparent 348deg,transparent 360deg);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:exclude;filter:drop-shadow(0 0 6px rgba(100,243,159,.55));animation:upct-border-orbit 6.4s linear infinite}
+@keyframes upct-border-orbit{to{--upct-border-angle:360deg}}
 .institution-head{display:flex;justify-content:space-between;align-items:center;gap:15px;font:500 10px/1.5 var(--mono);color:#a0b0c8;letter-spacing:.04em}
 .institution-status{display:inline-flex;align-items:center;gap:8px;color:#c8dfd9}
 .institution-status.secondary{color:#91a4be}
@@ -185,8 +190,10 @@ a.result-row:hover{padding-left:8px;background:rgba(255,255,255,.025)}
 .degree-number{font:500 12px/1.5 var(--mono);color:#566b89;padding-top:1px}
 .degree-topline{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;font:500 10px/1.5 var(--mono);letter-spacing:.045em;color:#92a7c7;margin-bottom:10px}
 .degree-progress{color:#a5dacc;font-size:9px}
+.degree-honors{display:inline-flex;align-items:center;justify-content:center;border:1px solid rgba(238,204,139,.43);border-radius:4px;padding:4px 9px;background:linear-gradient(100deg,rgba(240,199,115,.14),rgba(243,213,147,.05));box-shadow:inset 0 0 10px rgba(240,203,130,.055);color:#f6db9f;font-size:9px;letter-spacing:.085em;white-space:nowrap}
 .degree-item h3{font-size:20px;line-height:1.3;font-weight:580;letter-spacing:-.04em;color:#e9edf4;margin:0}
 .degree-item p{font-size:12px;line-height:1.6;color:#8996a8;margin:7px 0 0}
+.degree-item p strong{color:#e7d5b6;font-weight:670;font-variant-numeric:tabular-nums}
 .degree-item p i{display:inline-block;width:3px;height:3px;background:#7896bc;border-radius:50%;margin:0 7px 3px}
 .credential-column{display:flex;flex-direction:column;gap:10px}
 .credential-primary{position:relative;overflow:hidden;padding:25px 28px 24px;border:1px solid rgba(173,202,243,.3);border-radius:9px;background:radial-gradient(circle at 100% 0%,rgba(95,130,201,.20),transparent 50%),linear-gradient(135deg,#111b2a,#10151e)}
@@ -201,6 +208,30 @@ a.result-row:hover{padding-left:8px;background:rgba(255,255,255,.025)}
 .credential-secondary{display:flex;flex-direction:column;gap:7px;padding:14px 19px;border:1px solid rgba(200,214,238,.13);border-radius:6px;background:rgba(255,255,255,.015)}
 .credential-secondary span{font:500 9px/1.5 var(--mono);letter-spacing:.06em;color:#809abf}
 .credential-secondary strong{font-size:12px;line-height:1.4;color:#d2dbe7;font-weight:550}
+.conference-drawer{margin-top:30px;border:1px solid rgba(144,168,204,.22);border-radius:9px;background:linear-gradient(140deg,#111720,#0b1017 80%);overflow:hidden}
+.conference-drawer summary{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:25px;cursor:pointer;padding:21px 23px}
+.conference-drawer summary::-webkit-details-marker{display:none}
+.conference-drawer summary b{display:block;font-size:16px;line-height:1.2;font-weight:610;color:#e9f1fb;letter-spacing:-.02em}
+.conference-drawer summary small{display:block;font-size:11px;line-height:1.5;color:#91a1b6;margin-top:7px}
+.conference-summary-right{display:flex;align-items:center;gap:22px;flex:none}
+.conference-summary-right strong{font:500 9px/1.3 var(--mono);color:#a9d5c5;letter-spacing:.06em;white-space:nowrap}
+.conference-drawer[open] summary{border-bottom:1px solid rgba(184,211,241,.12)}
+.conference-drawer[open] .community-expand{transform:rotate(45deg)}
+.conference-timeline{padding:7px 23px 19px;animation:detail-arrive .25s ease-out}
+.conference-year{display:grid;grid-template-columns:57px minmax(0,1fr);gap:20px;padding:17px 0;border-bottom:1px solid rgba(193,218,247,.10)}
+.conference-year:last-child{border-bottom:0}
+.conference-year-label{font:600 12px/1.6 var(--mono);color:#8caecf;padding-top:8px}
+.conference-entries{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.conference-entry{display:flex;align-items:flex-start;gap:12px;min-width:0;min-height:80px;padding:13px;border:1px solid rgba(175,201,231,.14);border-radius:6px;background:rgba(211,230,255,.025);text-decoration:none;color:inherit;transition:background .2s,border-color .2s}
+a.conference-entry:hover,a.conference-entry:focus-visible{border-color:rgba(147,211,187,.45);background:rgba(93,143,151,.1)}
+.conference-format{flex:0 0 78px;display:inline-block;padding:4px 3px;border-radius:3px;background:rgba(146,179,225,.08);border:1px solid rgba(146,179,225,.18);color:#adc2dd;text-align:center;font:500 8px/1.35 var(--mono);letter-spacing:.03em}
+.conference-format.oral{color:#b1e4d1;border-color:rgba(112,213,165,.24);background:rgba(97,201,147,.08)}
+.conference-format.poster{color:#d2c2ec;border-color:rgba(168,146,210,.25);background:rgba(153,127,200,.08)}
+.conference-format.seminar{color:#e8cfab;border-color:rgba(220,179,118,.22);background:rgba(215,171,106,.07)}
+.conference-copy{display:block;min-width:0}
+.conference-copy strong{display:block;font-size:12px;font-weight:590;line-height:1.45;color:#e1eaf5}
+.conference-copy small{display:block;font-size:10px;line-height:1.55;color:#92a3b8;margin-top:5px}
+.conference-link{margin-left:auto;color:#9bbfc0;font-size:13px;flex:none}
 .community-drawer{margin-top:27px;border-top:1px solid rgba(255,255,255,.16);border-bottom:1px solid rgba(255,255,255,.16)}
 .community-drawer summary{list-style:none;display:flex;justify-content:space-between;align-items:center;gap:20px;cursor:pointer;padding:20px 3px}
 .community-drawer summary::-webkit-details-marker{display:none}
@@ -247,6 +278,7 @@ a.result-row:hover{padding-left:8px;background:rgba(255,255,255,.025)}
   .credential-primary{grid-row:span 2}
   .credential-secondary{justify-content:center}
   .community-content{gap:18px}
+  .conference-entries{grid-template-columns:1fr}
   .affiliation-inner{grid-template-columns:1fr 1fr;gap:23px}
   .affiliation-main{grid-column:1/-1;padding:0 0 19px;border-right:0;border-bottom:1px solid var(--compact-stroke)}
   .affiliation-group{padding:0}
@@ -301,6 +333,15 @@ a.result-row:hover{padding-left:8px;background:rgba(255,255,255,.025)}
   .credential-primary{padding:23px 21px}
   .credential-primary h3{margin-top:28px;font-size:27px}
   .community-content{grid-template-columns:1fr;gap:17px}
+  .conference-drawer summary{padding:18px 16px;gap:12px}
+  .conference-drawer summary b{font-size:15px}
+  .conference-summary-right{gap:9px}
+  .conference-summary-right strong{font-size:8px}
+  .conference-timeline{padding:7px 15px 14px}
+  .conference-year{grid-template-columns:1fr;gap:8px;padding:15px 0}
+  .conference-year-label{padding:0}
+  .conference-entry{padding:12px 10px;gap:9px;min-height:0}
+  .conference-format{flex-basis:73px;font-size:7px}
   .affiliation-inner{grid-template-columns:1fr;gap:16px;padding:24px 0}
   .affiliation-main{padding-bottom:16px}
   .affiliation-group{border-bottom:1px solid rgba(255,255,255,.07);padding-bottom:13px}
@@ -329,4 +370,4 @@ a.result-row:hover{padding-left:8px;background:rgba(255,255,255,.025)}
   .footer-inner{flex-wrap:wrap;gap:12px;padding:18px 0}
   .footer-inner>p{display:none}
 }
-@media(prefers-reduced-motion:reduce){.detail-list,.extra-results,.compact-event-list{animation:none}}
+@media(prefers-reduced-motion:reduce){.detail-list,.extra-results,.compact-event-list,.conference-timeline,.experience-upct::before{animation:none}}

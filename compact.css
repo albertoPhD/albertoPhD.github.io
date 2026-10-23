@@ -131,8 +131,7 @@ a.result-row:hover{padding-left:8px;background:rgba(255,255,255,.025)}
 .experience-heading h2 span{color:#8b97a9}
 .experience-heading>p{font-size:13px;line-height:1.8;color:#9ca8b9;margin:0;max-width:350px}
 .experience-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.experience-feature{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1.16fr) minmax(300px,.84fr);border:1px solid rgba(172,204,250,.27);border-radius:10px;background:linear-gradient(115deg,#121e30 0%,#0d1521 53%,#0b1019 100%);overflow:hidden;position:relative}
-.experience-feature:after{content:"";position:absolute;top:0;left:0;width:220px;height:2px;background:linear-gradient(90deg,#d5e7ff,rgba(144,183,235,.18),transparent)}
+.experience-feature{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1.16fr) minmax(300px,.84fr);border:1px solid rgba(114,214,155,.29);border-radius:10px;background:linear-gradient(115deg,#121e30 0%,#0d1521 53%,#0b1019 100%);overflow:hidden;position:relative;isolation:isolate}
 .experience-feature-main{padding:26px 31px 27px;display:flex;flex-direction:column}
 .experience-meta{display:flex;justify-content:space-between;gap:18px;align-items:center;font:500 10px/1.5 var(--mono);letter-spacing:.055em;color:#a9b4c6}
 .status-current{display:inline-flex;align-items:center;gap:9px;color:#e6f3ff}
@@ -150,11 +149,11 @@ a.result-row:hover{padding-left:8px;background:rgba(255,255,255,.025)}
 .research-group strong{display:block;font-size:17px;font-weight:580;letter-spacing:-.035em;margin-top:9px;color:#edf2fa}
 .research-group p{font-size:11px;color:#919db0;margin:6px 0 0;line-height:1.6}
 .experience-institution{min-width:0;display:flex;flex-direction:column;padding:23px 26px 0;border:1px solid var(--compact-stroke);border-radius:9px;background:linear-gradient(142deg,#10151d,#0b0e14 84%)}
-/* A narrow emerald highlight travels around the UPCT card; the card itself stays still. */
-@property --upct-border-angle{syntax:"<angle>";initial-value:0deg;inherits:false}
+/* One emerald highlight orbits the perimeter of each current research affiliation. */
+@property --live-border-angle{syntax:"<angle>";initial-value:0deg;inherits:false}
 .experience-upct{position:relative;isolation:isolate;border-color:rgba(114,214,155,.29)}
-.experience-upct::before{content:"";position:absolute;inset:-1px;border-radius:inherit;padding:2px;pointer-events:none;z-index:3;background:conic-gradient(from var(--upct-border-angle),transparent 0deg,transparent 253deg,rgba(72,213,135,.13) 276deg,rgba(112,247,169,.78) 297deg,#bdffd6 307deg,rgba(89,227,145,.3) 324deg,transparent 348deg,transparent 360deg);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:exclude;filter:drop-shadow(0 0 6px rgba(100,243,159,.55));animation:upct-border-orbit 6.4s linear infinite}
-@keyframes upct-border-orbit{to{--upct-border-angle:360deg}}
+.experience-feature::before,.experience-upct::before{content:"";position:absolute;inset:-1px;border-radius:inherit;padding:2px;pointer-events:none;z-index:3;background:conic-gradient(from var(--live-border-angle),transparent 0deg,transparent 253deg,rgba(72,213,135,.13) 276deg,rgba(112,247,169,.78) 297deg,#bdffd6 307deg,rgba(89,227,145,.3) 324deg,transparent 348deg,transparent 360deg);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:exclude;filter:drop-shadow(0 0 6px rgba(100,243,159,.55));animation:live-border-orbit 6.4s linear infinite}
+@keyframes live-border-orbit{to{--live-border-angle:360deg}}
 .institution-head{display:flex;justify-content:space-between;align-items:center;gap:15px;font:500 10px/1.5 var(--mono);color:#a0b0c8;letter-spacing:.04em}
 .institution-status{display:inline-flex;align-items:center;gap:8px;color:#c8dfd9}
 .institution-status.secondary{color:#91a4be}
@@ -370,4 +369,4 @@ a.conference-entry:hover,a.conference-entry:focus-visible{border-color:rgba(147,
   .footer-inner{flex-wrap:wrap;gap:12px;padding:18px 0}
   .footer-inner>p{display:none}
 }
-@media(prefers-reduced-motion:reduce){.detail-list,.extra-results,.compact-event-list,.conference-timeline,.experience-upct::before{animation:none}}
+@media(prefers-reduced-motion:reduce){.detail-list,.extra-results,.compact-event-list,.conference-timeline,.experience-feature::before,.experience-upct::before{animation:none}}

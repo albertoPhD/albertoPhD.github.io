@@ -154,17 +154,15 @@ a.result-row:hover{padding-left:8px;background:rgba(255,255,255,.025)}
 .institution-status{display:inline-flex;align-items:center;gap:8px;color:#c8dfd9}
 .institution-status.secondary{color:#91a4be}
 .institution-body{display:flex;gap:23px;align-items:center;min-height:164px;padding:20px 0}
-.institution-logo-plate{flex:0 0 176px;width:176px;min-height:82px;background:#fff;display:flex;align-items:center;justify-content:center;padding:17px 15px;border-radius:4px}
-.institution-logo-plate img{width:100%;height:auto;max-height:60px;object-fit:contain}
-.upct-plate img{filter:grayscale(1) brightness(0)}
-.ulm-plate img{max-height:48px}
+.institution-logo{flex:0 0 98px;width:98px;height:98px;display:flex;align-items:center;justify-content:center}
+.institution-logo img{display:block;width:100%;height:100%;object-fit:contain}
+/* On the dark card, invert the original black crest and screen away its white bitmap background. */
+.upct-symbol img{filter:invert(1);mix-blend-mode:screen}
+.ulm-symbol img{filter:invert(1);width:85px;height:85px}
 .institution-body h3{margin:0 0 8px;font-size:22px;line-height:1.18;font-weight:590;letter-spacing:-.045em;color:#e9edf5}
 .institution-body p{font-size:11px;color:#8d99aa;line-height:1.6;margin:4px 0}
 .institution-body .institution-name{font-size:12px;color:#d2dce9;font-weight:540}
 .institution-footer{font:500 9px/1.6 var(--mono);letter-spacing:.06em;color:#8196b5;padding:14px 0;border-top:1px solid rgba(255,255,255,.10);margin-top:auto}
-.upct-plate{gap:8px;justify-content:flex-start;padding:11px 12px}
-.upct-plate img{filter:none;flex:0 0 64px;width:64px;height:64px;max-height:none;object-fit:contain}
-.upct-wordmark{font:800 29px/1 'Inter',sans-serif;letter-spacing:-.085em;color:#0b0e14;white-space:nowrap}
 .experience-ulm{position:relative;overflow:hidden;border-color:rgba(159,190,229,.30);background:linear-gradient(143deg,#141d2b,#0b1018 79%)}
 .experience-ulm:before{content:"";position:absolute;top:0;left:0;width:160px;height:2px;background:linear-gradient(90deg,#aac9f0,rgba(168,205,246,.2),transparent)}
 .experience-ulm .institution-head>span:first-child{color:#bccde3}
@@ -220,10 +218,8 @@ a.result-row:hover{padding-left:8px;background:rgba(255,255,255,.025)}
   .nav>a{font-size:12px}
   .experience-feature-identity{gap:15px}
   .institution-body{gap:15px}
-  .institution-logo-plate{width:143px;flex-basis:143px;padding:14px}
-  .upct-plate{gap:7px;padding:10px}
-  .upct-plate img{flex-basis:50px;width:50px;height:50px}
-  .upct-wordmark{font-size:26px}
+  .institution-logo{width:92px;flex-basis:92px;height:92px}
+  .ulm-symbol img{width:80px;height:80px}
   .institution-body h3{font-size:20px}
   .affiliation-inner{grid-template-columns:1.1fr 1fr 1fr;gap:16px}
   .affiliation-main{gap:13px;padding-right:13px}
@@ -245,7 +241,7 @@ a.result-row:hover{padding-left:8px;background:rgba(255,255,255,.025)}
   .experience-feature-groups{display:grid;grid-template-columns:1fr 1fr;gap:20px;border-left:0;border-top:1px solid rgba(205,224,251,.12);padding:5px 29px}
   .research-group+.research-group{border:0}
   .institution-body{flex-direction:column;align-items:start;gap:18px}
-  .institution-logo-plate{width:100%;flex:0 0 auto;max-width:218px}
+  .institution-logo{flex:0 0 auto}
   .education-grid{grid-template-columns:1fr;gap:28px}
   .credential-column{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
   .credential-primary{grid-row:span 2}
@@ -294,10 +290,8 @@ a.result-row:hover{padding-left:8px;background:rgba(255,255,255,.025)}
   .research-group+.research-group{border-top:1px solid rgba(190,209,240,.12)}
   .experience-institution{padding:20px 21px 0}
   .institution-body{min-height:0;gap:15px;padding:19px 0}
-  .institution-logo-plate{width:190px;min-height:77px}
-  .upct-plate{gap:9px}
-  .upct-plate img{flex-basis:64px;width:64px;height:64px}
-  .upct-wordmark{font-size:29px}
+  .institution-logo{width:82px;height:82px}
+  .ulm-symbol img{width:74px;height:74px}
   .experience-ulm .institution-body{min-height:0}
   .institution-body h3{font-size:21px}
   .education-grid{gap:25px}

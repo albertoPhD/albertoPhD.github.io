@@ -15,14 +15,14 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="./mark.svg?v=6">
   <link rel="stylesheet" href="./styles.css">
-  <link rel="stylesheet" href="./compact.css?v=8">
+  <link rel="stylesheet" href="./compact.css?v=9">
   <script src="./app.js" defer></script>
   <title>Alberto López-García — Quantum Research & Engineering</title>
 </head>
-<body>
+<body id="top">
   <a class="skip-link" href="#main">Skip to content</a>
   <div class="scroll-progress" aria-hidden="true"></div>
-  <header class="site-header" id="top">
+  <header class="site-header">
     <div class="wrap header-inner">
       <a class="brand" href="#top" aria-label="Alberto López-García, back to top">
         <span class="brand-symbol" aria-hidden="true"><svg viewBox="0 0 180 160" xmlns="http://www.w3.org/2000/svg">
@@ -43,17 +43,58 @@
   <main id="main">
     <section class="hero" aria-labelledby="hero-name">
       <div class="hero-gridline" aria-hidden="true"></div><div class="hero-ambient" aria-hidden="true"></div>
-      <div class="hero-light-sculpture" aria-hidden="true"><div class="sculpture-light"></div><div class="sculpture-disk"></div><div class="sculpture-ring ring-one"></div><div class="sculpture-ring ring-two"></div><div class="sculpture-ring ring-three"></div><div class="sculpture-arc"></div><div class="sculpture-flare"></div></div>
+      <div class="hero-light-sculpture hero-quantum-visual" aria-hidden="true">
+        <div class="sculpture-light"></div><div class="sculpture-disk"></div><div class="sculpture-ring ring-one"></div><div class="sculpture-ring ring-two"></div><div class="sculpture-ring ring-three"></div><div class="sculpture-arc"></div><div class="sculpture-flare"></div>
+        <svg class="quantum-diagram" viewBox="0 0 640 640" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="quantum-arc" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#93bdff" stop-opacity=".1"/><stop offset=".48" stop-color="#d9ebff"/><stop offset="1" stop-color="#78f1cb"/></linearGradient>
+            <radialGradient id="quantum-core"><stop stop-color="#c7ebff" stop-opacity=".85"/><stop offset=".24" stop-color="#709ff2" stop-opacity=".4"/><stop offset="1" stop-color="#709ff2" stop-opacity="0"/></radialGradient>
+            <filter id="quantum-glow"><feGaussianBlur stdDeviation="8"/></filter>
+          </defs>
+          <g class="diagram-grid" fill="none" stroke="#a8caff" stroke-width="1">
+            <circle cx="320" cy="317" r="191" stroke-opacity=".3"/>
+            <circle cx="320" cy="317" r="148" stroke-opacity=".09" stroke-dasharray="2 12"/>
+            <ellipse cx="320" cy="317" rx="191" ry="68" transform="rotate(-28 320 317)" stroke-opacity=".36"/>
+            <ellipse cx="320" cy="317" rx="191" ry="68" transform="rotate(57 320 317)" stroke-opacity=".25"/>
+            <ellipse cx="320" cy="317" rx="79" ry="191" transform="rotate(-22 320 317)" stroke-opacity=".2"/>
+            <path d="M107 317H534M320 104V530" stroke-opacity=".12" stroke-dasharray="4 10"/>
+          </g>
+          <g class="diagram-active" fill="none" stroke-linecap="round">
+            <path d="M159 382C190 205 354 138 487 249" stroke="#9fc7ff" stroke-opacity=".45" stroke-width="9" filter="url(#quantum-glow)"/>
+            <path class="diagram-trajectory" d="M159 382C190 205 354 138 487 249" stroke="url(#quantum-arc)" stroke-width="2.7"/>
+            <path d="M320 317L434 186" stroke="#bde7ff" stroke-width="2.2"/>
+            <path d="M427 190L434 186L434 195" stroke="#bde7ff" stroke-width="2"/>
+            <circle cx="320" cy="317" r="47" fill="url(#quantum-core)" stroke="none"/>
+            <circle cx="320" cy="317" r="4" fill="#e2f1ff" stroke="none"/>
+            <circle class="diagram-state" cx="434" cy="186" r="8" fill="#a6ffe1" stroke="#e4fff3" stroke-width="1.5"/>
+            <circle cx="434" cy="186" r="24" fill="#79edcb" fill-opacity=".13" stroke="none" filter="url(#quantum-glow)"/>
+            <path d="M478 249L524 232L554 232" stroke="#a3d4e7" stroke-opacity=".58" stroke-width="1"/>
+            <path d="M165 383L120 406L83 406" stroke="#a3d4e7" stroke-opacity=".42" stroke-width="1"/>
+          </g>
+          <g class="diagram-labels" font-family="monospace" font-size="13" letter-spacing="2">
+            <text x="538" y="226" fill="#c6e2f8">|ψ⟩</text>
+            <text x="56" y="415" fill="#7d9db6">CONTROL</text>
+            <text x="307" y="94" fill="#7692b6">Z</text>
+            <text x="544" y="326" fill="#7692b6">X</text>
+          </g>
+          <g class="diagram-wave" fill="none" stroke-linecap="round">
+            <path d="M152 552H488" stroke="#a2b9d7" stroke-opacity=".22" stroke-width="1"/>
+            <path d="M152 552H196C214 552 211 533 229 533S248 570 266 570S283 533 301 533S320 570 338 570S356 533 374 533S392 552 410 552H488" stroke="#a5d9ff" stroke-width="1.5"/>
+            <text x="154" y="590" font-family="monospace" font-size="12" letter-spacing="3" fill="#8aa6c6">PULSE CONTROL</text>
+          </g>
+        </svg>
+        <span class="hero-visual-caption">QUANTUM STATE / CONTROL SPACE</span>
+      </div>
       <div class="wrap hero-inner">
-        <div class="hero-topline reveal"><span class="live-indicator"><i></i> FULBRIGHT · MIT 2026—PRESENT</span><span>CAMBRIDGE, MASSACHUSETTS</span></div>
+        <div class="hero-topline reveal"><span class="live-indicator"><i></i> FULBRIGHT RESEARCH FELLOW · MIT</span><span>CAMBRIDGE, MA · 2026—PRESENT</span></div>
         <div class="hero-copy">
-          <div class="hero-eyebrow reveal">QUANTUM RESEARCH &amp; ENGINEERING <span class="thin-separator"></span> ALBERTO LÓPEZ-GARCÍA</div>
-          <h1 id="hero-name" class="reveal">Alberto<br><span>López-García</span><b class="name-period">.</b></h1>
-          <p class="hero-subtitle reveal">Quantum R&amp;D researcher.<br><span>Telecommunications Systems Engineer.</span></p>
-          <p class="hero-detail reveal">I work on quantum control, sensing and simulation — building physical models and testing them against the constraints of real systems.</p>
-          <div class="hero-buttons reveal"><a class="button button-solid" href="#research">Explore my work <span aria-hidden="true">↗</span></a><a class="button button-quiet" href="#contact">Get in touch <span aria-hidden="true">↗</span></a></div>
+          <div class="hero-eyebrow reveal">ALBERTO LÓPEZ-GARCÍA <span class="thin-separator"></span> QUANTUM R&amp;D</div>
+          <h1 id="hero-name" class="reveal">Quantum ideas.<br><span>Real systems.</span></h1>
+          <p class="hero-subtitle reveal">Quantum researcher. <span>Telecommunications Systems Engineer.</span></p>
+          <p class="hero-detail reveal">From NV centers to superconducting circuits, I explore better ways to control, sense and simulate quantum systems — with an engineer's focus on real-world constraints.</p>
+          <div class="hero-buttons reveal"><a class="button button-solid" href="#research">Explore my research <span aria-hidden="true">↗</span></a><a class="button button-quiet" href="#publications">Publications <span aria-hidden="true">↗</span></a></div>
         </div>
-        <div class="hero-bottom reveal"><div class="hero-institution"><span class="tiny-label">FULBRIGHT PREDOCTORAL RESEARCH FELLOW</span><strong>MIT <span class="hero-insitution-divider"></span> EQuS &amp; Cao Group</strong></div><a class="scroll-cue" href="#experience"><span>DISCOVER</span><span class="scroll-arrow" aria-hidden="true">↓</span></a></div>
+        <div class="hero-bottom reveal"><div class="hero-proof"><div><strong>MIT</strong><span>FULBRIGHT FELLOW</span></div><div><strong>03</strong><span>JOURNAL ARTICLES</span></div><div><strong>11</strong><span>CONFERENCE CONTRIBUTIONS</span></div></div><a class="scroll-cue" href="#experience"><span>DISCOVER</span><span class="scroll-arrow" aria-hidden="true">↓</span></a></div>
       </div>
     </section>
 

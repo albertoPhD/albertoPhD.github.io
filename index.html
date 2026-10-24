@@ -15,8 +15,8 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="./mark.svg?v=6">
   <link rel="stylesheet" href="./styles.css">
-  <link rel="stylesheet" href="./compact.css?v=10">
-  <script src="./app.js?v=4" defer></script>
+  <link rel="stylesheet" href="./compact.css?v=11">
+  <script src="./app.js?v=5" defer></script>
   <title>Alberto López-García — Quantum Research & Engineering</title>
 </head>
 <body id="top">
@@ -43,15 +43,14 @@
   <main id="main">
     <section class="hero" aria-labelledby="hero-name">
       <div class="hero-gridline" aria-hidden="true"></div><div class="hero-ambient" aria-hidden="true"></div>
-      <div class="hero-light-sculpture hero-quantum-visual" aria-hidden="true">
-        <div class="bloch-atmosphere"></div>
-        <div class="bloch-ring bloch-ring-outer"></div>
-        <div class="bloch-ring bloch-ring-inner"></div>
-        <canvas class="bloch-canvas" id="bloch-canvas" width="700" height="700"></canvas>
-        <div class="bloch-coordinate bloch-coordinate-top">|0⟩</div>
-        <div class="bloch-coordinate bloch-coordinate-bottom">|1⟩</div>
-        <div class="bloch-notation"><span class="bloch-notch"></span> COHERENT STATE <b>01 / 02</b></div>
-        <span class="hero-visual-caption">BLOCH SPACE / LIVE EVOLUTION</span>
+      <div class="hero-light-sculpture hero-control-visual" aria-hidden="true">
+        <div class="control-atmosphere"></div>
+        <div class="control-panel-frame"></div>
+        <canvas class="control-canvas" id="control-canvas" width="760" height="660"></canvas>
+        <div class="control-overline"><span class="control-led"></span> COHERENT CONTROL <i>FIELD 01 / 02</i></div>
+        <div class="control-platform control-platform-nv"><span>01 / SPIN CONTROL</span><strong>NV CENTER</strong></div>
+        <div class="control-platform control-platform-sc"><span>02 / CIRCUIT CONTROL</span><strong>FLUXONIUM</strong></div>
+        <span class="control-caption">AMPLITUDE <i></i> PHASE <i></i> TIME</span>
       </div>
       <div class="wrap hero-inner">
         <div class="hero-topline reveal"><span class="live-indicator"><i></i> FULBRIGHT RESEARCH FELLOW · MIT</span><span>CAMBRIDGE, MA · 2026—PRESENT</span></div>
@@ -183,7 +182,7 @@
         </div>
         <div class="conference-atlas reveal" id="conference-atlas">
           <div class="atlas-heading">
-            <div><span class="atlas-eyebrow">SCIENTIFIC COMMUNICATION / 2024—2026</span><h3>Research, <em>across borders.</em></h3><p>Explore the cities where I have shared my work through talks, seminars and posters.</p></div>
+            <div><span class="atlas-eyebrow">SCIENTIFIC COMMUNICATION / 2024—2026</span><h3>Research, <em>across borders.</em></h3><p>Explore talks, posters and research connections — including my current base at MIT in Cambridge.</p></div>
             <div class="atlas-view-controls" role="group" aria-label="Map view">
               <button type="button" class="atlas-view is-active" data-atlas-view="overview" aria-pressed="true">Transatlantic</button>
               <button type="button" class="atlas-view" data-atlas-view="europe" aria-pressed="false">Europe detail</button>
@@ -327,14 +326,13 @@
               </div>
             </div>
             <aside class="atlas-inspector" id="atlas-inspector" aria-live="polite">
-              <div class="atlas-inspector-top"><span>SELECTED LOCATION</span><span class="atlas-inspector-index">01 / 08</span></div>
-              <div class="atlas-inspector-title"><span class="atlas-inspector-dot"></span><h4 id="atlas-location-title">Denver</h4><span id="atlas-location-country">UNITED STATES</span></div>
-              <p class="atlas-location-note" id="atlas-location-note">Two contributions at the APS Global Physics Summit.</p>
-              <div class="atlas-events" id="atlas-events"><span>ORAL TALK · 2026</span><strong>APS Global Physics Summit</strong><span>POSTER · 2026</span><strong>APS Global Physics Summit</strong></div>
+              <div class="atlas-inspector-top"><span>SELECTED LOCATION</span><span class="atlas-inspector-index">02 / 09</span></div>
+              <div class="atlas-inspector-title"><span class="atlas-inspector-dot"></span><h4 id="atlas-location-title">Cambridge</h4><span id="atlas-location-country">MASSACHUSETTS · UNITED STATES</span></div>
+              <p class="atlas-location-note" id="atlas-location-note">My current research base at MIT, through the Fulbright visiting-student programme.</p>
+              <div class="atlas-events" id="atlas-events"><span>RESEARCH STAY · 2026—PRESENT</span><strong>MIT · Engineering Quantum Systems (EQuS) / Cao Group</strong></div>
               <a class="atlas-explore-link" href="#conference-archive">View all contributions <span aria-hidden="true">↗</span></a>
             </aside>
           </div>
-          <div class="atlas-footer"><div class="atlas-city-index" id="atlas-city-index" aria-label="Select a city on the map"></div><span>08 CITIES · 09 LOCATED CONTRIBUTIONS</span></div>
         </div>
         <details class="conference-drawer reveal" id="conference-archive" open><summary><span><b>Conferences &amp; talks</b><small>Full record: oral presentations, research seminars and scientific posters · 2024–2026</small></span><span class="conference-summary-right"><strong>11 CONTRIBUTIONS</strong><span class="community-expand" aria-hidden="true">＋</span></span></summary>
           <div class="conference-timeline">

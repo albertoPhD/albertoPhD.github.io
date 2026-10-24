@@ -167,215 +167,201 @@
     sectionLinks.forEach(({ section }) => observer.observe(section));
   }
 
-  // A high-DPI, orthographically projected Bloch-sphere study: real 3D
-  // wireframe geometry, illuminated state vector and slowly evolving orbit.
-  // This is a conceptual visual, not an experimental state reconstruction.
-  const blochCanvas = document.getElementById('bloch-canvas');
-  if (blochCanvas) {
-    const ctx = blochCanvas.getContext('2d', { alpha: true });
+
+  // An animated coherent-control field: a phase-modulated wavefront over a
+  // perspective control plane. This is deliberately conceptual, not measured
+  // experimental data or a reconstruction of any specific quantum state.
+  const fieldCanvas = document.getElementById('control-canvas');
+  if (fieldCanvas) {
+    const ctx = fieldCanvas.getContext('2d', { alpha: true });
     if (ctx) {
-      let side = 700;
-      let visible = true;
-      let running = false;
-      let lastDrawn = 0;
-      let motionX = 0;
-      let motionY = 0;
-      const TAU = Math.PI * 2;
-
-      const fitCanvas = () => {
-        const bounds = blochCanvas.getBoundingClientRect();
-        side = Math.max(160, bounds.width || 700);
-        const ratio = Math.min(window.devicePixelRatio || 1, 2);
-        blochCanvas.width = Math.round(side * ratio);
-        blochCanvas.height = Math.round(side * ratio);
-        ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
-        if (reduceMotion) drawSphere(0);
+      const W = 760, H = 660;
+      let active = false, visible = true, lastFrame = 0;
+      const point = (u, v, z = 0) => ({ x: 76 + 570 * u + 76 * v, y: 472 - 158 * u + 105 * v - z });
+      const displacement = (u, v, t) => {
+        const envelope = Math.pow(Math.sin(Math.PI * Math.max(0, Math.min(1, u))), 1.2);
+        const carrier = Math.sin(14.0 * u - t * .00066 + 1.7 * v);
+        const secondary = .26 * Math.sin(27 * u + 2.8 * v + t * .00031);
+        return 96 * envelope * Math.cos(v * 1.05) * (carrier + secondary);
       };
-
-      const project = (point, yaw, pitch, center, radius) => {
-        const [x, y, z] = point;
-        const x1 = x * Math.cos(yaw) - z * Math.sin(yaw);
-        const z1 = x * Math.sin(yaw) + z * Math.cos(yaw);
-        const y1 = y * Math.cos(pitch) - z1 * Math.sin(pitch);
-        const z2 = y * Math.sin(pitch) + z1 * Math.cos(pitch);
-        return { x: center + x1 * radius, y: center - y1 * radius, depth: z2 };
-      };
-
-      const drawStroke = (points, hemisphere, yaw, pitch, center, radius, stroke, opacity, width) => {
+      const drawPolyline = (samples, color, lineWidth, opacity, glow = 0) => {
+        if (!samples.length) return;
+        ctx.save();
         ctx.beginPath();
-        let previousVisible = false;
-        for (const point of points) {
-          const next = project(point, yaw, pitch, center, radius);
-          const currentVisible = hemisphere === 'both' || (hemisphere === 'front' ? next.depth >= -0.005 : next.depth < 0.005);
-          if (currentVisible) {
-            if (!previousVisible) ctx.moveTo(next.x, next.y);
-            else ctx.lineTo(next.x, next.y);
-          }
-          previousVisible = currentVisible;
-        }
-        ctx.strokeStyle = stroke;
+        samples.forEach((p, i) => i ? ctx.lineTo(p.x, p.y) : ctx.moveTo(p.x, p.y));
+        ctx.lineWidth = lineWidth;
+        ctx.strokeStyle = color;
         ctx.globalAlpha = opacity;
-        ctx.lineWidth = width;
+        ctx.lineJoin = 'round';
+        ctx.lineCap = 'round';
+        if (glow) { ctx.shadowColor = '#8cffdf'; ctx.shadowBlur = glow; }
         ctx.stroke();
-        ctx.globalAlpha = 1;
+        ctx.restore();
+      };
+      const drawDot = (x, y, size, color, glow) => {
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(x, y, size, 0, Math.PI * 2);
+        ctx.fillStyle = color;
+        ctx.shadowBlur = glow;
+        ctx.shadowColor = color;
+        ctx.fill();
+        ctx.restore();
       };
 
-      const meridians = Array.from({ length: 12 }, (_, i) => {
-        const lon = (i / 12) * TAU;
-        return Array.from({ length: 71 }, (_, j) => {
-          const lat = -Math.PI / 2 + (j / 70) * Math.PI;
-          return [Math.cos(lat) * Math.cos(lon), Math.sin(lat), Math.cos(lat) * Math.sin(lon)];
-        });
-      });
-      const parallels = [-75, -60, -45, -30, -15, 0, 15, 30, 45, 60, 75].map(degrees => {
-        const lat = degrees * Math.PI / 180;
-        return Array.from({ length: 113 }, (_, j) => {
-          const lon = j / 112 * TAU;
-          return [Math.cos(lat) * Math.cos(lon), Math.sin(lat), Math.cos(lat) * Math.sin(lon)];
-        });
-      });
+      function drawField(stamp) {
+        const t = reduceMotion ? 0 : stamp;
+        ctx.clearRect(0, 0, W, H);
 
-      function drawSphere(time) {
-        const center = side / 2;
-        const radius = side * .299;
-        const yaw = .35 + time * .000075 + motionX * .11;
-        const pitch = -.34 + Math.sin(time * .00027) * .07 + motionY * .08;
-        ctx.clearRect(0, 0, side, side);
+        // Soft atmosphere follows the flowing field, never resolving into an orb.
+        const ambient = ctx.createRadialGradient(410, 332, 40, 410, 332, 375);
+        ambient.addColorStop(0, 'rgba(23,116,132,.19)');
+        ambient.addColorStop(.55, 'rgba(10,73,98,.065)');
+        ambient.addColorStop(1, 'rgba(4,9,18,0)');
+        ctx.fillStyle = ambient;
+        ctx.fillRect(0, 0, W, H);
 
-        // Atmospheric halo and faint glass body give the line geometry depth.
-        const aura = ctx.createRadialGradient(center, center, radius * .13, center, center, radius * 1.65);
-        aura.addColorStop(0, 'rgba(50,145,181,.16)');
-        aura.addColorStop(.5, 'rgba(24,99,140,.13)');
-        aura.addColorStop(1, 'rgba(2,9,20,0)');
-        ctx.fillStyle = aura;
-        ctx.fillRect(0, 0, side, side);
-        const glass = ctx.createRadialGradient(center - radius * .31, center - radius * .4, radius * .12, center, center, radius * 1.05);
-        glass.addColorStop(0, 'rgba(64,144,173,.14)');
-        glass.addColorStop(.6, 'rgba(26,72,110,.19)');
-        glass.addColorStop(1, 'rgba(4,15,25,.28)');
+        const floor = [point(0, -1), point(1, -1), point(1, 1), point(0, 1)];
         ctx.beginPath();
-        ctx.arc(center, center, radius, 0, TAU);
-        ctx.fillStyle = glass;
+        floor.forEach((p, i) => i ? ctx.lineTo(p.x, p.y) : ctx.moveTo(p.x, p.y));
+        ctx.closePath();
+        const floorShade = ctx.createLinearGradient(110, 420, 670, 255);
+        floorShade.addColorStop(0, 'rgba(16,43,63,.01)');
+        floorShade.addColorStop(.48, 'rgba(22,69,84,.19)');
+        floorShade.addColorStop(1, 'rgba(12,44,61,.025)');
+        ctx.fillStyle = floorShade;
         ctx.fill();
+        ctx.strokeStyle = 'rgba(121,193,215,.20)';
+        ctx.lineWidth = .9;
+        ctx.stroke();
 
-        for (const hemisphere of ['back', 'front']) {
-          const front = hemisphere === 'front';
-          meridians.forEach((curve, i) => drawStroke(curve, hemisphere, yaw, pitch, center, radius, '#8bd2e9', front ? .33 + (i % 3) * .035 : .09, front ? .8 : .63));
-          parallels.forEach((curve, i) => drawStroke(curve, hemisphere, yaw, pitch, center, radius, '#92c9eb', front ? (i === 5 ? .59 : .28) : .085, i === 5 ? 1.2 : .75));
+        // Instrument-plane calibration marks and depth lines.
+        for (let i = 0; i <= 26; i++) {
+          const u = i / 26;
+          drawPolyline([point(u, -1), point(u, 1)], '#80bad4', i % 5 === 0 ? .9 : .5, i % 5 === 0 ? .19 : .085);
+        }
+        for (let i = 0; i <= 16; i++) {
+          const v = -1 + i / 8;
+          drawPolyline([point(0, v), point(1, v)], '#6da6c2', .55, i === 8 ? .22 : .085);
         }
 
-        // Orbiting control trajectory, with a travelling luminous point.
-        const ring = Array.from({ length: 161 }, (_, j) => {
-          const a = j / 160 * TAU;
-          return [Math.cos(a) * 1.13, Math.sin(a) * .58, Math.sin(a) * 1.0];
-        });
-        drawStroke(ring, 'both', yaw + .18, pitch + .14, center, radius, '#56a7cc', .36, 1.15);
-        const beadPhase = time * .00035 + 1.4;
-        const bead = project([Math.cos(beadPhase) * 1.13, Math.sin(beadPhase) * .58, Math.sin(beadPhase)], yaw + .18, pitch + .14, center, radius);
-        ctx.beginPath();
-        ctx.arc(bead.x, bead.y, radius * .018, 0, TAU);
-        ctx.fillStyle = 'rgba(122,245,218,.9)';
-        ctx.shadowColor = '#66ffe1';
-        ctx.shadowBlur = radius * .11;
-        ctx.fill();
-        ctx.shadowBlur = 0;
+        // Sculptural interference surface: coupled phase-modulated control lines.
+        for (let i = 0; i <= 34; i++) {
+          const v = -1 + 2 * i / 34;
+          const points = [];
+          for (let j = 0; j <= 148; j++) {
+            const u = j / 148;
+            points.push(point(u, v, displacement(u, v, t)));
+          }
+          const foreground = i > 15 && i < 23;
+          const alpha = foreground ? .54 : (.18 + (1 - Math.abs(v)) * .21);
+          const gradient = ctx.createLinearGradient(85, 450, 660, 245);
+          gradient.addColorStop(0, '#608ab7');
+          gradient.addColorStop(.42, '#6ab9df');
+          gradient.addColorStop(.78, '#7de8d0');
+          gradient.addColorStop(1, '#b9fbe0');
+          drawPolyline(points, gradient, foreground ? 1.3 : .8, alpha);
+        }
 
-        // State vector and arrow. The vector itself moves slowly, independently
-        // of the sphere's coordinate grid.
-        const stateLat = .65 + Math.sin(time * .00019) * .08;
-        const stateLon = 1.07 + Math.cos(time * .00022) * .11;
-        const vector = [Math.cos(stateLat) * Math.cos(stateLon), Math.sin(stateLat), Math.cos(stateLat) * Math.sin(stateLon)];
-        const endpoint = project(vector, yaw, pitch, center, radius);
-        const glow = ctx.createLinearGradient(center, center, endpoint.x, endpoint.y);
-        glow.addColorStop(0, 'rgba(132,206,247,.26)');
-        glow.addColorStop(1, 'rgba(157,255,226,1)');
-        ctx.beginPath();
-        ctx.moveTo(center, center);
-        ctx.lineTo(endpoint.x, endpoint.y);
-        ctx.strokeStyle = glow;
-        ctx.lineWidth = 2.3;
-        ctx.shadowColor = 'rgba(111,234,229,.72)';
-        ctx.shadowBlur = 13;
-        ctx.stroke();
-        ctx.shadowBlur = 0;
-        const angle = Math.atan2(endpoint.y - center, endpoint.x - center);
-        ctx.beginPath();
-        ctx.moveTo(endpoint.x, endpoint.y);
-        ctx.lineTo(endpoint.x - 12 * Math.cos(angle - .42), endpoint.y - 12 * Math.sin(angle - .42));
-        ctx.moveTo(endpoint.x, endpoint.y);
-        ctx.lineTo(endpoint.x - 12 * Math.cos(angle + .42), endpoint.y - 12 * Math.sin(angle + .42));
-        ctx.strokeStyle = '#c1ffeb';
-        ctx.lineWidth = 1.9;
-        ctx.stroke();
-        const bloom = ctx.createRadialGradient(endpoint.x, endpoint.y, 0, endpoint.x, endpoint.y, radius * .16);
-        bloom.addColorStop(0, 'rgba(169,255,228,.43)');
-        bloom.addColorStop(1, 'rgba(97,238,188,0)');
-        ctx.beginPath();
-        ctx.arc(endpoint.x, endpoint.y, radius * .16, 0, TAU);
+        // Fine transverse filaments establish a legible 3D woven surface.
+        for (let i = 2; i <= 42; i++) {
+          const u = i / 44;
+          const points = [];
+          for (let j = 0; j <= 40; j++) {
+            const v = -1 + j / 20;
+            points.push(point(u, v, displacement(u, v, t)));
+          }
+          drawPolyline(points, '#81d7d6', i % 5 === 0 ? .85 : .52, i % 5 === 0 ? .33 : .12);
+        }
+
+        // One privileged pulse trajectory makes the graphic read instantly.
+        const centerTrace = [];
+        for (let j = 0; j <= 240; j++) {
+          const u = j / 240;
+          centerTrace.push(point(u, -.08, displacement(u, -.08, t)));
+        }
+        const bright = ctx.createLinearGradient(98, 420, 677, 250);
+        bright.addColorStop(0, '#73adf5');
+        bright.addColorStop(.43, '#b2f1f6');
+        bright.addColorStop(.77, '#8cf9cf');
+        bright.addColorStop(1, '#d8ffea');
+        drawPolyline(centerTrace, bright, 2.1, .86, 12);
+        drawPolyline(centerTrace, '#e0fffa', .75, .88);
+
+        const u = .09 + .82 * ((t * .00007) % 1);
+        const emitter = point(u, -.08, displacement(u, -.08, t));
+        const bloom = ctx.createRadialGradient(emitter.x, emitter.y, 0, emitter.x, emitter.y, 66);
+        bloom.addColorStop(0, 'rgba(181,255,223,.28)');
+        bloom.addColorStop(.27, 'rgba(111,243,218,.12)');
+        bloom.addColorStop(1, 'rgba(90,233,208,0)');
         ctx.fillStyle = bloom;
-        ctx.fill();
-        ctx.beginPath();
-        ctx.arc(endpoint.x, endpoint.y, radius * .021, 0, TAU);
-        ctx.fillStyle = '#caffeb';
-        ctx.fill();
-        ctx.strokeStyle = 'rgba(178,251,240,.6)';
-        ctx.lineWidth = 1.1;
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.arc(center, center, 3, 0, TAU);
-        ctx.fillStyle = '#def7ff';
-        ctx.fill();
+        ctx.beginPath(); ctx.arc(emitter.x, emitter.y, 66, 0, Math.PI * 2); ctx.fill();
+        drawDot(emitter.x, emitter.y, 5.0, '#eafff7', 28);
+        drawDot(emitter.x, emitter.y, 1.7, '#ffffff', 8);
 
-        ctx.font = `${Math.max(12, side * .020)}px 'IBM Plex Mono', monospace`;
-        ctx.fillStyle = 'rgba(190,255,238,.94)';
-        ctx.fillText('|ψ⟩', endpoint.x + 12, endpoint.y - 13);
-        ctx.font = `${Math.max(10, side * .014)}px 'IBM Plex Mono', monospace`;
-        ctx.fillStyle = 'rgba(165,207,224,.67)';
-        ctx.fillText('X', center + radius + 20, center + 4);
-        ctx.fillText('Z', center + 8, center - radius - 14);
-        ctx.beginPath();
-        ctx.arc(center, center, radius, 0, TAU);
-        ctx.strokeStyle = 'rgba(145,211,234,.39)';
-        ctx.lineWidth = 1.4;
-        ctx.stroke();
+        // Three signal probes tie the object to amplitude, phase and time.
+        [0.21, 0.52, 0.81].forEach((u, i) => {
+          const at = point(u, -.08, displacement(u, -.08, t));
+          const baseline = point(u, -.08);
+          drawPolyline([at, baseline], '#b9f9e3', .8, .22);
+          drawDot(baseline.x, baseline.y, 2, i === 1 ? '#a9ffe5' : '#75bbd1', 7);
+        });
+
+        // Edges are material cues, not bogus experimental readouts.
+        const nv = point(.025, -.13, 0), sc = point(.978, -.13, 0);
+        drawDot(nv.x, nv.y, 4, '#8cc7f5', 14);
+        drawDot(sc.x, sc.y, 4, '#91f0d4', 14);
+        ctx.save();
+        ctx.setLineDash([2, 7]);
+        drawPolyline([point(0, -1), point(0, 1)], '#b4dbe9', .9, .36);
+        drawPolyline([point(1, -1), point(1, 1)], '#b4ffe0', .9, .44);
+        ctx.restore();
+
+        // Diagnostic mini-trace: a pulse envelope, rather than another sphere.
+        ctx.save();
+        ctx.lineWidth = .9;
+        ctx.strokeStyle = 'rgba(115,180,196,.32)';
+        ctx.beginPath(); ctx.moveTo(320, 565); ctx.lineTo(665, 565); ctx.stroke();
+        const dataPath = [];
+        for (let i = 0; i <= 120; i++) {
+          const u = i / 120;
+          const env = Math.pow(Math.sin(Math.PI * u), 2);
+          dataPath.push({ x: 320 + 345 * u, y: 565 - 34 * env * (1 + .13 * Math.cos(t * .0005 + 18 * u)) });
+        }
+        drawPolyline(dataPath, '#78dacf', 1.4, .54);
+        ctx.restore();
       }
 
-      const animate = stamp => {
-        if (!running) return;
-        if (stamp - lastDrawn >= 31) {
-          lastDrawn = stamp;
-          drawSphere(stamp);
-        }
-        requestAnimationFrame(animate);
+      const fit = () => {
+        const box = fieldCanvas.getBoundingClientRect();
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        fieldCanvas.width = Math.round(Math.max(160, box.width) * dpr);
+        fieldCanvas.height = Math.round(Math.max(160, box.height) * dpr);
+        ctx.setTransform(fieldCanvas.width / W, 0, 0, fieldCanvas.height / H, 0, 0);
+        drawField(0);
+      };
+      const frame = stamp => {
+        if (!active) return;
+        if (stamp - lastFrame > 30) { lastFrame = stamp; drawField(stamp); }
+        requestAnimationFrame(frame);
       };
       const start = () => {
-        if (running || reduceMotion || document.hidden || !visible) return;
-        running = true;
-        requestAnimationFrame(animate);
+        if (active || reduceMotion || !visible || document.hidden) return;
+        active = true;
+        requestAnimationFrame(frame);
       };
-      const stop = () => { running = false; };
-      fitCanvas();
-      if ('ResizeObserver' in window) new ResizeObserver(fitCanvas).observe(blochCanvas);
-      else window.addEventListener('resize', fitCanvas);
+      const stop = () => { active = false; };
+      fit();
+      if ('ResizeObserver' in window) new ResizeObserver(fit).observe(fieldCanvas);
+      else window.addEventListener('resize', fit);
       if ('IntersectionObserver' in window) {
         new IntersectionObserver(entries => {
           visible = entries[0]?.isIntersecting ?? true;
           if (visible) start(); else stop();
-        }, { threshold: 0 }).observe(blochCanvas);
+        }, { threshold: 0 }).observe(fieldCanvas);
       }
-      document.addEventListener('visibilitychange', () => {
-        if (document.hidden) stop(); else start();
-      });
-      if (!reduceMotion && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-        hero?.addEventListener('pointermove', event => {
-          const rect = hero.getBoundingClientRect();
-          motionX = ((event.clientX - rect.left) / rect.width - .5) * 2;
-          motionY = ((event.clientY - rect.top) / rect.height - .5) * 2;
-        }, { passive: true });
-        hero?.addEventListener('pointerleave', () => { motionX = 0; motionY = 0; });
-      }
-      if (reduceMotion) drawSphere(0);
-      else start();
+      document.addEventListener('visibilitychange', () => document.hidden ? stop() : start());
+      start();
     }
   }
 
@@ -387,6 +373,10 @@
       { id: 'denver', name: 'Denver', country: 'UNITED STATES', lon: -104.99, lat: 39.74, year: 2026,
         note: 'Two contributions at the APS Global Physics Summit.',
         events: [{ type: 'ORAL TALK', title: 'APS Global Physics Summit', detail: 'March 17, 2026' }, { type: 'POSTER', title: 'APS Global Physics Summit', detail: 'March 19, 2026' }] },
+      { id: 'cambridge', name: 'Cambridge', country: 'MASSACHUSETTS · UNITED STATES', lon: -71.1056, lat: 42.3736, year: 2026,
+        category: 'research',
+        note: 'My current research base at MIT, through the Fulbright visiting-student programme.',
+        events: [{ type: 'RESEARCH STAY', title: 'MIT · Engineering Quantum Systems (EQuS) / Cao Group', detail: '2026–present' }] },
       { id: 'valencia', name: 'Valencia', country: 'SPAIN', lon: -.376, lat: 39.47, year: 2025,
         note: 'Quantum Information in Spain · ICE-10.', events: [{ type: 'POSTER', title: 'ICE-10 · Quantum Information in Spain' }] },
       { id: 'ulm', name: 'Ulm', country: 'GERMANY', lon: 9.99, lat: 48.40, year: 2025,
@@ -409,13 +399,12 @@
     const map = atlas.querySelector('.atlas-map-viewport');
     const routes = document.getElementById('atlas-routes');
     const pinLayer = document.getElementById('atlas-pin-layer');
-    const cityIndex = document.getElementById('atlas-city-index');
     const cityTitle = document.getElementById('atlas-location-title');
     const country = document.getElementById('atlas-location-country');
     const note = document.getElementById('atlas-location-note');
     const eventsList = document.getElementById('atlas-events');
     const idx = atlas.querySelector('.atlas-inspector-index');
-    let active = 'denver';
+    let active = 'cambridge';
     let view = 'overview';
     const svgNS = 'http://www.w3.org/2000/svg';
     const origin = { lon: -.985, lat: 37.6 };
@@ -434,27 +423,25 @@
       return el;
     };
 
-    const selectCity = (id, changeView = false) => {
-      if (id === 'denver' && view === 'europe' && changeView) {
-        view = 'overview';
-        renderMap();
-      }
+    const selectCity = id => {
       active = id;
       const place = locations.find(location => location.id === id);
       if (!place) return;
       cityTitle.textContent = place.name;
       country.textContent = place.country;
       note.textContent = place.note;
-      idx.textContent = `${String(locations.indexOf(place) + 1).padStart(2, '0')} / 08`;
+      idx.textContent = `${String(locations.indexOf(place) + 1).padStart(2, '0')} / ${String(locations.length).padStart(2, '0')}`;
       eventsList.replaceChildren();
       place.events.forEach(event => {
         const type = document.createElement('span');
-        type.textContent = `${event.type} · ${place.year}${event.detail ? ' · ' + event.detail : ''}`;
+        type.textContent = place.category === 'research'
+          ? 'RESEARCH STAY · 2026—PRESENT'
+          : `${event.type} · ${place.year}${event.detail ? ' · ' + event.detail : ''}`;
         const title = document.createElement('strong');
         title.textContent = event.title;
         eventsList.append(type, title);
       });
-      atlas.querySelectorAll('.atlas-pin,.atlas-city-index button').forEach(button => {
+      atlas.querySelectorAll('.atlas-pin').forEach(button => {
         const selected = button.dataset.city === id;
         button.classList.toggle('is-selected', selected);
         button.setAttribute('aria-pressed', String(selected));
@@ -481,7 +468,7 @@
       base.textContent = 'UPCT';
       base.setAttribute('aria-hidden', 'true');
       pinLayer.append(base);
-      locations.filter(place => view === 'overview' || place.id !== 'denver').forEach(place => {
+      locations.filter(place => view === 'overview' || (place.id !== 'denver' && place.id !== 'cambridge')).forEach(place => {
         const end = project(place, bounds);
         const path = pathFor(start, end);
         for (const className of ['atlas-route-glow', 'atlas-route', 'atlas-route-tracer']) {
@@ -495,10 +482,12 @@
         pin.dataset.city = place.id;
         pin.style.left = end.x / 11 + '%';
         pin.style.top = end.y / 4.8 + '%';
-        pin.setAttribute('aria-label', `${place.name}, ${place.country.toLowerCase()}, ${place.events.length} conference ${place.events.length === 1 ? 'contribution' : 'contributions'}`);
+        pin.setAttribute('aria-label', place.category === 'research'
+          ? 'Cambridge, Massachusetts — MIT research base, 2026–present'
+          : `${place.name}, ${place.country.toLowerCase()}, ${place.events.length} conference ${place.events.length === 1 ? 'contribution' : 'contributions'}`);
         const text = document.createElement('span');
         text.className = 'atlas-pin-label';
-        text.textContent = place.name;
+        text.textContent = place.category === 'research' ? 'MIT · Cambridge' : place.name;
         pin.append(text);
         pin.addEventListener('click', () => selectCity(place.id));
         pin.addEventListener('focus', () => selectCity(place.id));
@@ -507,18 +496,9 @@
       selectCity(active);
     }
 
-    locations.forEach(place => {
-      const button = document.createElement('button');
-      button.type = 'button';
-      button.dataset.city = place.id;
-      button.textContent = place.name;
-      button.setAttribute('aria-pressed', 'false');
-      button.addEventListener('click', () => selectCity(place.id, true));
-      cityIndex.append(button);
-    });
     atlas.querySelectorAll('[data-atlas-view]').forEach(button => button.addEventListener('click', () => {
       view = button.dataset.atlasView;
-      if (view === 'europe' && active === 'denver') active = 'ulm';
+      if (view === 'europe' && (active === 'denver' || active === 'cambridge')) active = 'ulm';
       renderMap();
     }));
     atlas.querySelector('.atlas-explore-link')?.addEventListener('click', () => {

@@ -1,5 +1,5 @@
 /* Alberto López-García / condensed portfolio layer.
-   Keeps the original aerospace mark and kinetic hero; reduces visual repetition. */
+   Preserves the identity, with a research-led editorial hero. */
 :root{--compact-stroke:rgba(180,197,224,.17);--compact-dim:#8b95a5;--compact-ice:#b9d3f7}
 .wrap{width:min(100% - 84px,1190px)}
 html{scroll-padding-top:74px}
@@ -163,7 +163,7 @@ a.result-row:hover{padding-left:8px;background:rgba(255,255,255,.025)}
 .institution-logo{flex:0 0 98px;width:98px;height:98px;display:flex;align-items:center;justify-content:center}
 .institution-logo img{display:block;width:100%;height:100%;object-fit:contain}
 /* On the dark card, invert the original black crest and screen away its white bitmap background. */
-.upct-symbol img{filter:invert(1);mix-blend-mode:screen;width:67px;height:67px}
+.upct-symbol img{filter:invert(1);mix-blend-mode:screen;width:82px;height:82px}
 .ulm-symbol img{filter:invert(1);width:85px;height:85px}
 .institution-body h3{margin:0 0 8px;font-size:22px;line-height:1.18;font-weight:590;letter-spacing:-.045em;color:#e9edf5}
 .institution-body p{font-size:11px;color:#8d99aa;line-height:1.6;margin:4px 0}
@@ -274,7 +274,7 @@ a.conference-entry:hover,a.conference-entry:focus-visible{border-color:rgba(147,
   .experience-feature-identity{gap:15px}
   .institution-body{gap:15px}
   .institution-logo{width:92px;flex-basis:92px;height:92px}
-  .upct-symbol img{width:63px;height:63px}
+  .upct-symbol img{width:79px;height:79px}
   .ulm-symbol img{width:80px;height:80px}
   .institution-body h3{font-size:20px}
   .affiliation-inner{grid-template-columns:1.1fr 1fr 1fr;gap:16px}
@@ -346,7 +346,7 @@ a.conference-entry:hover,a.conference-entry:focus-visible{border-color:rgba(147,
   .experience-institution{padding:20px 21px 0}
   .institution-body{min-height:0;gap:15px;padding:19px 0}
   .institution-logo{width:82px;height:82px}
-  .upct-symbol img{width:57px;height:57px}
+  .upct-symbol img{width:75px;height:75px}
   .ulm-symbol img{width:74px;height:74px}
   .experience-ulm .institution-body{min-height:0}
   .institution-body h3{font-size:21px}
@@ -395,3 +395,79 @@ a.conference-entry:hover,a.conference-entry:focus-visible{border-color:rgba(147,
   .footer-inner>p{display:none}
 }
 @media(prefers-reduced-motion:reduce){.detail-list,.extra-results,.compact-event-list,.conference-timeline,.experience-feature::before,.experience-upct::before{animation:none}}
+
+/* Hero v3 — technical but human, with a visible schematic rather than a dim orb. */
+.hero{min-height:710px;height:min(800px,97svh);background:radial-gradient(ellipse 37% 56% at 80% 48%,rgba(43,88,137,.22) 0%,transparent 88%),radial-gradient(ellipse 24% 37% at 94% 60%,rgba(27,117,96,.105),transparent 100%),linear-gradient(147deg,#070b11 0%,#06080d 45%,#080e16 100%)}
+.hero-gridline{opacity:.29}
+.hero-inner{min-height:710px}
+.hero-ambient{opacity:.8}
+.hero-copy{max-width:730px;padding:33px 0 29px}
+.hero-eyebrow{font-size:11px;letter-spacing:.13em;color:#bbd2ee;margin-bottom:25px}
+.hero-eyebrow .thin-separator{background:#7c99b8}
+.hero h1{font-size:clamp(65px,7.5vw,112px);font-weight:690;letter-spacing:-.079em;line-height:1.005;white-space:normal;margin-bottom:27px;text-shadow:0 9px 45px rgba(0,0,0,.27)}
+.hero h1 span{color:#cddfff;background:linear-gradient(108deg,#a6c6f2 0%,#e4ecf8 53%,#a4dcd5 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hero-subtitle{font-size:clamp(20px,1.95vw,27px);letter-spacing:-.04em;font-weight:565;line-height:1.4;margin-bottom:15px;max-width:600px}
+.hero-subtitle span{color:#a8b8cc}
+.hero-detail{max-width:540px;line-height:1.75;font-size:14px;color:#a0adbe;margin-bottom:28px}
+.hero-buttons{gap:14px}
+.hero-buttons .button{height:51px;padding:0 21px}
+.hero-buttons .button-quiet{background:rgba(15,22,31,.48);border-color:rgba(185,213,247,.24)}
+.hero-topline{color:#90a4c0}
+.hero-topline .live-indicator{color:#d1e4f5}
+.hero-bottom{border-color:rgba(176,214,255,.16);padding:22px 0 26px}
+.hero-proof{display:flex;align-items:center;gap:45px}
+.hero-proof>div{display:flex;align-items:baseline;gap:10px}
+.hero-proof strong{font-size:24px;font-weight:625;line-height:1;letter-spacing:-.06em;color:#e4effb}
+.hero-proof>div:first-child strong{color:#a9d1ff}
+.hero-proof span{font:500 9px/1.4 var(--mono);letter-spacing:.075em;color:#90a9c7}
+.hero-quantum-visual{width:min(48vw,680px);height:min(48vw,680px);right:-1%;top:50%;opacity:.97;filter:none}
+.hero-quantum-visual .sculpture-light{opacity:.72;filter:blur(20px)}
+.hero-quantum-visual .sculpture-disk{opacity:.41}
+.hero-quantum-visual .sculpture-ring{opacity:.5}
+.hero-quantum-visual .sculpture-flare{opacity:.55}
+.quantum-diagram{position:absolute;inset:0;display:block;width:100%;height:100%;overflow:visible;filter:drop-shadow(0 0 16px rgba(102,155,224,.16))}
+.diagram-grid{animation:diagram-breathe 9s ease-in-out infinite alternate}
+.diagram-trajectory{stroke-dasharray:450;stroke-dashoffset:450;animation:diagram-trace 6s cubic-bezier(.28,.25,.38,.96) infinite}
+.diagram-state{transform-origin:center;transform-box:fill-box;animation:diagram-pulse 3s ease-in-out infinite alternate}
+.hero-visual-caption{position:absolute;right:8%;bottom:7%;font:500 10px/1.6 var(--mono);letter-spacing:.16em;color:#9bbbd6;opacity:.76}
+@keyframes diagram-trace{0%{stroke-dashoffset:450;opacity:.28}56%,85%{stroke-dashoffset:0;opacity:1}100%{stroke-dashoffset:-450;opacity:.2}}
+@keyframes diagram-pulse{from{transform:scale(.76);opacity:.58}to{transform:scale(1.28);opacity:1}}
+@keyframes diagram-breathe{from{opacity:.75}to{opacity:1}}
+
+@media(max-width:1050px){
+  .hero h1{font-size:clamp(61px,7.6vw,90px)}
+  .hero-quantum-visual{right:-8%;opacity:.8}
+}
+@media(max-width:820px){
+  .hero{height:auto;min-height:700px}
+  .hero-inner{min-height:700px}
+  .hero-copy{max-width:620px}
+  .hero h1{font-size:clamp(59px,8.8vw,82px)}
+  .hero-quantum-visual{width:540px;height:540px;right:-205px;top:44%;opacity:.67}
+}
+@media(max-width:620px){
+  .hero{min-height:700px;height:auto}
+  .hero-inner{min-height:700px}
+  .hero-topline{padding-top:23px;font-size:9px}
+  .hero-copy{padding:38px 0 32px;max-width:100%}
+  .hero-eyebrow{font-size:9px;letter-spacing:.065em;gap:9px;margin-bottom:21px;flex-wrap:wrap}
+  .hero-eyebrow .thin-separator{width:15px}
+  .hero h1{font-size:clamp(45px,11.9vw,65px);line-height:1.04;margin-bottom:22px;letter-spacing:-.075em}
+  .hero-subtitle{font-size:18px;line-height:1.42;max-width:350px;margin-bottom:15px}
+  .hero-detail{font-size:12.7px;line-height:1.67;max-width:345px;margin-bottom:25px;color:#b0bbcb}
+  .hero-buttons{gap:9px;align-items:center}
+  .hero-buttons .button{height:49px}
+  .hero-buttons .button-solid{width:100%;font-size:13px}
+  .hero-buttons .button-quiet{width:auto;height:38px;border:0;background:transparent;padding:0 2px;font-size:12px;color:#c2d9f4}
+  .hero-quantum-visual{width:420px;height:420px;right:-157px;top:35%;opacity:.58;-webkit-mask-image:linear-gradient(90deg,transparent,rgba(0,0,0,.55) 25%,#000 53%);mask-image:linear-gradient(90deg,transparent,rgba(0,0,0,.55) 25%,#000 53%)}
+  .hero-quantum-visual .sculpture-disk{opacity:.34}
+  .hero-visual-caption,.diagram-labels,.diagram-wave{display:none}
+  .hero-bottom{padding:19px 0 22px;gap:12px}
+  .hero-proof{width:100%;justify-content:space-between;gap:11px}
+  .hero-proof>div{align-items:flex-start;flex-direction:column;gap:6px;min-width:0}
+  .hero-proof strong{font-size:22px}
+  .hero-proof span{font-size:7px;letter-spacing:.035em;max-width:94px}
+  .scroll-cue{gap:0}
+  .scroll-cue>span:first-child{display:none}
+}
+@media(prefers-reduced-motion:reduce){.diagram-grid,.diagram-trajectory,.diagram-state{animation:none}.diagram-trajectory{stroke-dashoffset:0}}

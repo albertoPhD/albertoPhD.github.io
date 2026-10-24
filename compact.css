@@ -84,11 +84,13 @@ a.result-row:hover{padding-left:8px;background:rgba(255,255,255,.025)}
 .extra-results .result-row:last-child{border-bottom:0}
 .programs-compact{background:#090c11}
 .programs-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.program-tile{padding:26px 28px 24px;min-height:224px;display:flex;flex-direction:column}
+.program-tile{padding:22px 24px 19px;min-height:0;display:flex;flex-direction:column}
 .program-num,.program-footnote{font:500 10px/1.55 var(--mono);color:#859abc;letter-spacing:.04em;position:relative}
-.program-tile h3{font-size:clamp(24px,2.15vw,32px);letter-spacing:-.055em;font-weight:590;line-height:1.22;margin:20px 0 10px;position:relative}
-.program-tile p{font-size:13px;line-height:1.7;color:#9ba4b2;margin:0 0 20px;max-width:520px;position:relative}
-.program-footnote{font-size:9px;color:#78889d;border-top:1px solid rgba(255,255,255,.09);padding-top:14px;margin-top:auto}
+.program-tile h3{font-size:clamp(21px,1.85vw,27px);letter-spacing:-.045em;font-weight:590;line-height:1.25;margin:13px 0 8px;position:relative}
+.program-tile p{font-size:12px;line-height:1.65;color:#9ba4b2;margin:0 0 15px;max-width:520px;position:relative}
+.program-contribution{font-size:12px;line-height:1.6;color:#d4e2f0;margin:0 0 17px;position:relative}
+.program-contribution span{display:block;font:550 9px/1.4 var(--mono);color:#92b3ce;letter-spacing:.08em;margin-bottom:5px}
+.program-footnote{font-size:9px;color:#78889d;border-top:1px solid rgba(255,255,255,.09);padding-top:12px;margin-top:auto}
 .profile-compact{background:#07090d}
 .profile-columns{display:grid;grid-template-columns:1fr 1fr;gap:65px}
 .profile-column{min-width:0}
@@ -161,7 +163,7 @@ a.result-row:hover{padding-left:8px;background:rgba(255,255,255,.025)}
 .institution-logo{flex:0 0 98px;width:98px;height:98px;display:flex;align-items:center;justify-content:center}
 .institution-logo img{display:block;width:100%;height:100%;object-fit:contain}
 /* On the dark card, invert the original black crest and screen away its white bitmap background. */
-.upct-symbol img{filter:invert(1);mix-blend-mode:screen}
+.upct-symbol img{filter:invert(1);mix-blend-mode:screen;width:67px;height:67px}
 .ulm-symbol img{filter:invert(1);width:85px;height:85px}
 .institution-body h3{margin:0 0 8px;font-size:22px;line-height:1.18;font-weight:590;letter-spacing:-.045em;color:#e9edf5}
 .institution-body p{font-size:11px;color:#8d99aa;line-height:1.6;margin:4px 0}
@@ -194,6 +196,11 @@ a.result-row:hover{padding-left:8px;background:rgba(255,255,255,.025)}
 .degree-item p{font-size:12px;line-height:1.6;color:#8996a8;margin:7px 0 0}
 .degree-item p strong{color:#e7d5b6;font-weight:670;font-variant-numeric:tabular-nums}
 .degree-item p i{display:inline-block;width:3px;height:3px;background:#7896bc;border-radius:50%;margin:0 7px 3px}
+.degree-thesis{margin-top:15px;padding:11px 13px 12px;border-left:2px solid rgba(217,188,127,.68);background:linear-gradient(90deg,rgba(226,184,107,.065),transparent 95%)}
+.degree-thesis>span{display:flex;align-items:center;flex-wrap:wrap;gap:8px;font:500 9px/1.6 var(--mono);letter-spacing:.055em;color:#9baac0}
+.degree-thesis .thesis-grade{font:650 12px/1 var(--mono);color:#f2d69e;letter-spacing:0}
+.degree-thesis .degree-honors{font-size:8px;padding:3px 7px;letter-spacing:.065em}
+.degree-thesis em{display:block;font-size:12px;line-height:1.55;font-weight:530;font-style:normal;color:#e2e8f1;letter-spacing:-.005em;margin-top:9px}
 .credential-column{display:flex;flex-direction:column;gap:10px}
 .credential-primary{position:relative;overflow:hidden;padding:25px 28px 24px;border:1px solid rgba(173,202,243,.3);border-radius:9px;background:radial-gradient(circle at 100% 0%,rgba(95,130,201,.20),transparent 50%),linear-gradient(135deg,#111b2a,#10151e)}
 .credential-topline{display:flex;justify-content:space-between;align-items:center;gap:15px;color:#d0e0f8;font:500 10px/1.5 var(--mono);letter-spacing:.08em}
@@ -207,6 +214,24 @@ a.result-row:hover{padding-left:8px;background:rgba(255,255,255,.025)}
 .credential-secondary{display:flex;flex-direction:column;gap:7px;padding:14px 19px;border:1px solid rgba(200,214,238,.13);border-radius:6px;background:rgba(255,255,255,.015)}
 .credential-secondary span{font:500 9px/1.5 var(--mono);letter-spacing:.06em;color:#809abf}
 .credential-secondary strong{font-size:12px;line-height:1.4;color:#d2dbe7;font-weight:550}
+/* Short certificates are secondary to the actual university degrees and theses. */
+.credential-group,.transversal-training{border:1px solid rgba(187,207,235,.16);border-radius:8px;padding:18px 20px;background:linear-gradient(140deg,rgba(25,35,51,.6),rgba(9,13,19,.3))}
+.credential-section-label{display:block;color:#91a8c9;font:550 9px/1.5 var(--mono);letter-spacing:.095em;margin-bottom:13px}
+.credential-course{display:flex;align-items:center;gap:17px;min-height:66px;padding:9px 0}
+.credential-course+.credential-course{border-top:1px solid rgba(208,221,239,.10)}
+.credential-logo-box{display:flex;align-items:center;justify-content:center;flex:0 0 62px;width:62px;height:46px}
+.credential-logo{flex:none;display:block;object-fit:contain}
+.credential-logo.ibm-logo{width:55px;height:26px}
+.credential-logo.harvard-logo{width:35px;height:42px}
+.credential-text{min-width:0}
+.credential-text span{display:block;font:550 9px/1.4 var(--mono);letter-spacing:.055em;color:#8fa5c2;margin-bottom:6px}
+.credential-text strong{display:block;font-size:13px;line-height:1.45;color:#e0e7f0;font-weight:565}
+.transversal-training{background:rgba(255,255,255,.012)}
+.transversal-training h3{font-size:19px;font-weight:580;letter-spacing:-.035em;color:#e9eff8;margin:0 0 5px}
+.transversal-training p{font-size:11px;line-height:1.6;color:#91a1b6;margin:0 0 11px}
+.transversal-list{list-style:none;margin:0;padding:0;display:grid;gap:0}
+.transversal-list li{position:relative;font-size:11px;line-height:1.55;color:#bdcadb;padding:7px 0 7px 16px;border-top:1px solid rgba(202,218,240,.075)}
+.transversal-list li:before{content:"";position:absolute;left:1px;top:14px;width:5px;height:5px;border:1px solid #80bda8;border-radius:50%}
 .conference-drawer{margin-top:30px;border:1px solid rgba(144,168,204,.22);border-radius:9px;background:linear-gradient(140deg,#111720,#0b1017 80%);overflow:hidden}
 .conference-drawer summary{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:25px;cursor:pointer;padding:21px 23px}
 .conference-drawer summary::-webkit-details-marker{display:none}
@@ -249,6 +274,7 @@ a.conference-entry:hover,a.conference-entry:focus-visible{border-color:rgba(147,
   .experience-feature-identity{gap:15px}
   .institution-body{gap:15px}
   .institution-logo{width:92px;flex-basis:92px;height:92px}
+  .upct-symbol img{width:63px;height:63px}
   .ulm-symbol img{width:80px;height:80px}
   .institution-body h3{font-size:20px}
   .affiliation-inner{grid-template-columns:1.1fr 1fr 1fr;gap:16px}
@@ -273,9 +299,7 @@ a.conference-entry:hover,a.conference-entry:focus-visible{border-color:rgba(147,
   .institution-body{flex-direction:column;align-items:start;gap:18px}
   .institution-logo{flex:0 0 auto}
   .education-grid{grid-template-columns:1fr;gap:28px}
-  .credential-column{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
-  .credential-primary{grid-row:span 2}
-  .credential-secondary{justify-content:center}
+  .credential-column{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
   .community-content{gap:18px}
   .conference-entries{grid-template-columns:1fr}
   .affiliation-inner{grid-template-columns:1fr 1fr;gap:23px}
@@ -322,6 +346,7 @@ a.conference-entry:hover,a.conference-entry:focus-visible{border-color:rgba(147,
   .experience-institution{padding:20px 21px 0}
   .institution-body{min-height:0;gap:15px;padding:19px 0}
   .institution-logo{width:82px;height:82px}
+  .upct-symbol img{width:57px;height:57px}
   .ulm-symbol img{width:74px;height:74px}
   .experience-ulm .institution-body{min-height:0}
   .institution-body h3{font-size:21px}
